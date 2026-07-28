@@ -15,11 +15,29 @@ A lightweight, multi-threaded in-memory database engineered in C++. This project
   * **Log Compaction (`COMPACT`):** Features an AOF (Append-Only File) rewrite mechanism. By exclusively locking the database, it safely dumps a snapshot of active memory to a new file, pruning dead keys and historical data to prevent infinite disk bloat.
 
 ## 🛠️ How to Build & Run
-This project uses CMake for out-of-source builds.
+This project utilizes an industry-standard CMake out-of-source build pipeline.
 
-1. `mkdir build && cd build`
-2. `cmake ..`
-3. `cmake --build .`
-4. Run the executable: `.\redis_lite.exe`
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
 
-Connect via Telnet or Netcat: `telnet localhost 8080`
+**To start the server:**
+* **Windows (MinGW/Make):** `.\redis_lite.exe`
+* **Windows (Visual Studio):** `.\Debug\redis_lite.exe`
+* **Linux / Mac:** `./redis_lite`
+
+**Connect and interact via Telnet or Netcat:** `telnet localhost 8080`
+
+### 🐳 Run with Docker (Cross-Platform)
+If you prefer not to build from source, you can run the pre-configured Alpine Linux container.
+
+1. Build the image:
+   ```bash
+   docker build -t redis-lite .
+   ```
+2. Run the container and expose the port:
+   ```bash
+   docker run -p 8080:8080 redis-lite
+   ```
