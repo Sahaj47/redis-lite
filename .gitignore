@@ -1,0 +1,11 @@
+# Ignore the CMake build folder
+build/
+.vs/
+out/
+
+# Ignore the database logs
+*.wal
+temp.wal
+
+# Ignore Python cache
+__pycache__/
