@@ -3,15 +3,36 @@
 #include "../concurrency/thread_pool.h"
 #include <iostream>
 #include <string>
-#include <winsock2.h>
 #include <thread>
-#include <sstream>
+#include <cstring>
+
+// --- THE SHAPE-SHIFTER BLOCK ---
+#ifdef _WIN32
+    #include <winsock2.h>
+#else
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <unistd.h>
+    
+    // Polyfills: We tell Linux to treat Windows-specific keywords as standard C++ types
+    // so we don't have to rewrite the rest of our server logic!
+    #define SOCKET int
+    #define INVALID_SOCKET -1
+    #define SOCKET_ERROR -1
+    #define closesocket close
+#endif
+// -------------------------------
 
 Server::Server(int port, KeyValueStore& store) : port(port), store(store) {}
 
 void Server::start() {
+    #ifdef _WIN32
     WSADATA wsaData;
-    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        std::cerr << "Winsock initialization failed.\n";
+        return;
+    }
+    #endif
 
     SOCKET server_socket = socket(AF_INET, SOCK_STREAM, 0);
     
