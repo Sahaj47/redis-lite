@@ -4,7 +4,7 @@ A lightweight, multi-threaded in-memory database engineered in C++. This project
 
 ## 🚀 Hard Metrics & Performance
 * **In-Memory Throughput:** Achieved **~55,000 requests/second** during stress testing with 200 concurrent clients.
-* **Persistent Throughput:** Achieved **~25,000 requests/second** with strict Write-Ahead Logging (WAL) enabled (flushing to the physical disk on every command).
+* **Persistent Throughput:** Achieved **~34,000 requests/second** with strict Write-Ahead Logging (WAL) enabled (flushing to the physical disk on every command).
 * **Concurrency:** Safely handles massive traffic spikes utilizing a custom 8-worker Thread Pool dynamically mapped to the host's logical CPU cores.
 
 ## 🧠 Core Architecture
